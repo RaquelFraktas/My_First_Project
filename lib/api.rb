@@ -3,14 +3,14 @@
 
 # require_relative '../environment'
 
-class API
+# class API
 
-    def self.start
-        RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_KEY"])
-        #binding.pry
-    end
+    # def self.start
+    #     RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_KEY"])
 
-end
+    # end
+
+# end
 
 
 #this method could also go in my environment.rb instead of the start file

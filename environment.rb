@@ -6,12 +6,12 @@ Dotenv.load  #does this need to be here or gemfile?
 #require 'net/http' put this somewhere else
 
 
+RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_KEY"])
 
-require_relative './lib/api'
 require_relative './lib/cli'
-require_relative './lib/get_programs'
+require_relative './lib/artist'
 
-
+# require_relative './lib/api'
 # puts ENV["SPOTIFY_KEY"]
 # puts ENV["SPOTIFY_CLIENT_ID"]
 # binding.pry

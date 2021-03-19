@@ -7,4 +7,5 @@
 
 require_relative "../environment" 
 
-API.start
+
+ RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_KEY"])
