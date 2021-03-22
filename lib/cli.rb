@@ -14,6 +14,9 @@ class SearchItem
         if input == "Artist"
             prompt.ask("Please type in which artist you would like to search.", value: input)
             Artist.new(input)
+            artist_object = Artist.search
+            prompt.yes?("Is this what you were looking for?")
+            
         else  
             prompt.ask("Please type in which track you would like to search.", value: input)
             Track.new(input)
@@ -23,5 +26,5 @@ class SearchItem
         end
     
     end
-    # binding.pry
+    
 end

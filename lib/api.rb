@@ -1,4 +1,4 @@
-#set up like a class
+##CAN REMOVE. DONT NEED IT.
 #responsible for talking with API
 
 # require_relative '../environment'

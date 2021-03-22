@@ -10,6 +10,7 @@ class Artist
 
     def search
        artist_search = RSpotify::Artist.search(self.name) 
+       first_search = artist_search.first
     end
 
     def albums()
