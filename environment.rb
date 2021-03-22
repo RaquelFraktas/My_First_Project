@@ -11,6 +11,8 @@ RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_KEY"])
 require_relative './lib/cli'
 require_relative './lib/artist'
 
+SearchItem.new.select
+
 # require_relative './lib/api'
 # puts ENV["SPOTIFY_KEY"]
 # puts ENV["SPOTIFY_CLIENT_ID"]
