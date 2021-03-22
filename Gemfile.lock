@@ -24,10 +24,6 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    net-http (0.1.1)
-      net-protocol
-      uri
-    net-protocol (0.1.0)
     netrc (0.11.0)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
@@ -42,7 +38,6 @@ GEM
     omniauth-oauth2 (1.7.1)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
-    open-uri (0.1.0)
     pastel (0.8.0)
       tty-color (~> 0.5)
     pry (0.14.0)
@@ -74,7 +69,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
-    uri (0.10.1)
     wisper (2.0.1)
 
 PLATFORMS
@@ -83,8 +77,6 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   json
-  net-http
-  open-uri
   pry
   rspotify
   tty-prompt (~> 0.23.0)
