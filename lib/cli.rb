@@ -1,5 +1,6 @@
 class SearchItem
     attr_accessor :prompt
+    @@followed_artists = []
     
     def initialize
         puts "Welcome to Raquel's Spotify CLI"
@@ -14,8 +15,17 @@ class SearchItem
             artist_lookup
             
         else  
-            prompt.ask("Please type in which track you would like to search.", value: input)
-            Track.new(input)
+            answer = prompt.ask("Please type in which track you would like to search.", required: true)do |q|
+            q.modify :strip, :collapse
+          end
+            track_input = Track.new(answer) 
+            track_search = track_input.search
+            track_search.collect  do |track| 
+                track.artists.select {|object| object.match(/\A @name=/)}
+                binding.pry
+            end
+            puts "Here are the artists we came up with that have that song name: #{}"
+             
         end
     end
 
@@ -36,10 +46,21 @@ class SearchItem
            prompt_yes_or_no = prompt.yes?("Is this what you were looking for?")
             
            if prompt_yes_or_no
-            prompt.multi_select("Select drinks?", ["Follow the artist", "See top tracks", "See albums" ])
-
+                multi_selector = prompt.select("What would you like to do next?", ["Follow the artist", "See top tracks", "See albums", "Similar artists"])
+                   
+                case multi_selector
+                    when "Follow the artist"
+                        @@followed_artists << artist_object
+                    when "See top tracks"
+                        artist_search_object.top_tracks(:US) #HOW DO I PULL ALL THE NAMES OF HER TOP TRACKS?
+                        binding.pry
+                    when "See albums" 
+                        artist_search_object.albums
+                    end
+                    
             else
                 puts "Try your search again."
+                select
             end
     
     end

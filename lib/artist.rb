@@ -1,6 +1,6 @@
 class Artist
     attr_accessor :name
-    attr_reader :genres, :top_tracks, :popularity, :albums
+    attr_reader :genres, :top_tracks, :albums
 
     @@all = []
     def initialize(name)
@@ -13,12 +13,12 @@ class Artist
        first_search = artist_search.first
     end
 
-    def albums()
-        self.find do ||
-        end
-        #input code in here once the artist is chosen, and look through their albums 
-        #i want to display albums by the chosen artist
-    end
+    # def albums
+    #     self.find do ||
+    #     end
+    #     #input code in here once the artist is chosen, and look through their albums 
+    #     #i want to display albums by the chosen artist
+    # end
 
 
     def self.search_history
