@@ -64,6 +64,7 @@ class SearchItem
            
             when "Look at an album's tracks"
                 @artist_object.track_list
+                search_again?
             when "Search again"
                 select
             when "Exit the App"
@@ -72,9 +73,6 @@ class SearchItem
     end
 
     
-    def artist_album_trax
-
-    end
   
 
   def track_lookup
@@ -129,3 +127,5 @@ end
 #refractoring needs to be done
 #put stuff in artists and track classes
 #figure out how to get a list of tracks from an album
+#write a read me page
+#figure out what to do about licensing
