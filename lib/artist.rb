@@ -1,10 +1,11 @@
 class Artist
-    attr_accessor :name
+    attr_accessor :name, :album_names, :prompt
     attr_reader :genres, :top_tracks, :albums
 
     @@all = []
     def initialize(name)
         @name = name
+        @prompt = TTY::Prompt.new
         @@all << self
     end
 
@@ -13,12 +14,27 @@ class Artist
        first_search = artist_search.first
     end
 
-    # def albums
-    #     self.find do ||
-    #     end
-    #     #input code in here once the artist is chosen, and look through their albums 
-    #     #i want to display albums by the chosen artist
-    # end
+    def albums
+        @album_names = self.search.albums.collect do|album|
+            album.name
+       end
+       album_with_num = album_names.uniq.each_with_index do |album, i| 
+            i+=1 
+            puts "#{i}: #{album}"
+       end
+
+    end
+
+    def track_list
+        input = prompt.enum_select("Select an album to view tracks.", albums)
+        albums = RSpotify::Album.search(input)
+        # binding.pry
+
+        # external_url = tracks.map {|album| album.external_urls["spotify"]}
+        # puts "Click the following to play the song #{external_url}"
+    end
+
+
 
 
     def self.search_history

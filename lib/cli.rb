@@ -18,22 +18,7 @@ class SearchItem
       track_lookup
     end
   end
-
-
-  def artist_actions
-    multi_selector = @prompt.select("What would you like to do next?", ["Follow the artist", "See top tracks", "See albums", "Similar artists"])
-           
-    case multi_selector
-
-      when "Follow the artist"
-        @@followed_artists << @artist_object
-      when "See top tracks"
-        artist_search_object.top_tracks(:US) #HOW DO I PULL ALL THE NAMES OF HER TOP TRACKS?
-      when "See albums" 
-        artist_search_object.albums
-    end
-  end
-
+  
 
   def artist_lookup
     answer =  prompt.ask("Please type in which artist you would like to search.", required: true) do |q|
@@ -41,14 +26,12 @@ class SearchItem
     end
 
       @artist_object = Artist.new(answer)
-      artist_search_object = artist_object.search
-      puts "Artist's Name : #{artist_search_object.name}"
-      puts "-----------"
-      puts "Artist's genre(s) : #{artist_search_object.genres.join(', ')}"
-      puts "-----------"
-      puts "Artist's Spotify link : #{artist_search_object.external_urls["spotify"]}"
-      puts "-----------"
-
+      @artist_search_object = artist_object.search
+      puts "\n"
+      puts "Artist's Name : #{@artist_search_object.name}"
+      puts "Artist's genre(s) : #{@artist_search_object.genres.join(', ')}"
+      puts "Artist's Spotify link : #{@artist_search_object.external_urls["spotify"]}"
+    
       prompt_yes_or_no = prompt.yes?("Is this what you were looking for?")
             
     if prompt_yes_or_no
@@ -61,6 +44,43 @@ class SearchItem
   end
 
 
+  def artist_actions
+    multi_selector = @prompt.select("What would you like to do next?", ["Follow the artist", "List albums"])
+           
+    case multi_selector
+
+      when "Follow the artist"
+        follow_artist
+        followed_artist_names = @@followed_artists.collect {|artist| artist.name}
+        
+        puts "Here is the list of artists you currently follow: #{followed_artist_names.join(", ")}"
+        search_again?
+      when "List albums" 
+        @artist_object.albums
+       
+       end
+
+       puts  ans = prompt.select("Select what you want to do next.", ["Look at an album's tracks", "Search again" , "Exit the App"])
+        case ans
+           
+            when "Look at an album's tracks"
+                @artist_object.track_list
+            when "Search again"
+                select
+            when "Exit the App"
+                exit_app
+            end
+    end
+
+    
+    def artist_album_trax
+
+    end
+  
+    
+
+
+
   def track_lookup
     answer = prompt.ask("Please type in which track you would like to search.", required: true)do |q|
         q.modify :strip, :collapse
@@ -70,7 +90,6 @@ class SearchItem
        
     array_of_artists = track_search.collect  do |track| 
       track_artists = track.artists.collect {|object| object.name}
-    
     end
         
     puts "Here's the artist(s) that were found with that song name: \n \n" 
@@ -80,7 +99,7 @@ class SearchItem
       puts "#{number}:#{artist.join(", ")}"
     end
         
-    prompt_yes_or_no = prompt.yes?("Do you want to find out more information about an artist?")  
+    prompt_yes_or_no = prompt.yes?("Do you want to find out more information about one of the artists?")  
         
     if prompt_yes_or_no
        input= prompt.enum_select("Select the artist ", array_of_artists.uniq)
@@ -92,6 +111,26 @@ class SearchItem
          exit_app
     end
   end
+
+
+  def follow_artist
+    @@followed_artists << artist_object
+  end
+
+
+  def search_again?
+    prompt_y_or_n = prompt.yes?("Do you want to search again?")
+    prompt_y_or_n ? select : exit_app
+  end
     
+  def list_of_album_tracks
+
+  end
+
+  def exit_app
+    puts "CYA!"
+  end
 
 end
+
+#i should put in a class method at some point

@@ -14,5 +14,3 @@ class Track
      end
 
 end
-
-Track.new("No butterflies, no nothing")
