@@ -57,11 +57,10 @@ class SearchItem
         search_again?
       when "List albums" 
         @artist_object.albums
-       
        end
 
        puts  ans = prompt.select("Select what you want to do next.", ["Look at an album's tracks", "Search again" , "Exit the App"])
-        case ans
+       case ans
            
             when "Look at an album's tracks"
                 @artist_object.track_list
@@ -69,7 +68,7 @@ class SearchItem
                 select
             when "Exit the App"
                 exit_app
-            end
+        end
     end
 
     
@@ -77,9 +76,6 @@ class SearchItem
 
     end
   
-    
-
-
 
   def track_lookup
     answer = prompt.ask("Please type in which track you would like to search.", required: true)do |q|
@@ -123,9 +119,6 @@ class SearchItem
     prompt_y_or_n ? select : exit_app
   end
     
-  def list_of_album_tracks
-
-  end
 
   def exit_app
     puts "CYA!"
@@ -133,4 +126,6 @@ class SearchItem
 
 end
 
-#i should put in a class method at some point
+#refractoring needs to be done
+#put stuff in artists and track classes
+#figure out how to get a list of tracks from an album

@@ -27,15 +27,10 @@ class Artist
 
     def track_list
         input = prompt.enum_select("Select an album to view tracks.", albums)
-        albums = RSpotify::Album.search(input)
-        # binding.pry
-
-        # external_url = tracks.map {|album| album.external_urls["spotify"]}
-        # puts "Click the following to play the song #{external_url}"
+        album = RSpotify::Album.search(input)
+        external_url = album.map {|album| album.external_urls["spotify"]}
+        puts "Click the following link to open up Spotify and view the tracks: #{external_url.first}"
     end
-
-
-
 
     def self.search_history
         @@all
