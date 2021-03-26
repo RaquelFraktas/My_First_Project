@@ -1,6 +1,6 @@
 class Artist
     attr_accessor :name, :album_names, :prompt
-    attr_reader :genres, :top_tracks, :albums
+    attr_reader :genres, :albums
 
     @@all = []
     def initialize(name)
@@ -15,7 +15,7 @@ class Artist
     end
 
     def albums
-        @album_names = self.search.albums.collect do|album|
+        @album_names = self.search.albums.collect do|album| #why does it only work when i call albums?
             album.name
        end
        album_with_num = album_names.uniq.each_with_index do |album, i| 
@@ -40,5 +40,3 @@ end
 
 #need a run file that accesses artists
 #need to run environment.rb first
-# blood_orange = Artist.new("Blood Orange")
-# blood_orange.search

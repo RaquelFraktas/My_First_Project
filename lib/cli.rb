@@ -1,5 +1,5 @@
 class SearchItem
-    attr_accessor :prompt, :artist_object
+    attr_accessor :prompt, :artist_object, :track_input
     @@followed_artists = []
     
 
@@ -21,12 +21,8 @@ class SearchItem
   
 
   def artist_lookup
-    answer =  prompt.ask("Please type in which artist you would like to search.", required: true) do |q|
-      q.modify :strip, :collapse
-    end
-
-      @artist_object = Artist.new(answer)
-      @artist_search_object = artist_object.search
+    answer =  prompt.ask("Please type in which artist you would like to search.", required: true) {|q| q.modify :strip, :collapse}
+      create_artist_and_search(answer)
       puts "\n"
       puts "Artist's Name : #{@artist_search_object.name}"
       puts "Artist's genre(s) : #{@artist_search_object.genres.join(', ')}"
@@ -48,27 +44,22 @@ class SearchItem
     multi_selector = @prompt.select("What would you like to do next?", ["Follow the artist", "List albums"])
            
     case multi_selector
-
       when "Follow the artist"
         follow_artist
-        followed_artist_names = @@followed_artists.collect {|artist| artist.name}
-        
-        puts "Here is the list of artists you currently follow: #{followed_artist_names.join(", ")}"
-        search_again?
+        current_followed_artists
       when "List albums" 
         @artist_object.albums
        end
 
-       puts  ans = prompt.select("Select what you want to do next.", ["Look at an album's tracks", "Search again" , "Exit the App"])
-       case ans
-           
-            when "Look at an album's tracks"
-                @artist_object.track_list
-                search_again?
-            when "Search again"
-                select
-            when "Exit the App"
-                exit_app
+    puts  ans = prompt.select("Select what you want to do next.", ["Look at an album", "Search again" , "Exit the App"])
+    case ans
+     when "Look at an album"
+         @artist_object.track_list
+         search_again?
+     when "Search again"
+         select
+     when "Exit the App"
+         exit_app
         end
     end
 
@@ -79,14 +70,14 @@ class SearchItem
     answer = prompt.ask("Please type in which track you would like to search.", required: true)do |q|
         q.modify :strip, :collapse
     end
-    track_input = Track.new(answer) 
-    track_search = track_input.search
+    
+    create_track_and_search(answer)
        
-    array_of_artists = track_search.collect  do |track| 
+    array_of_artists = @track_search.collect  do |track| 
       track_artists = track.artists.collect {|object| object.name}
     end
         
-    puts "Here's the artist(s) that were found with that song name: \n \n" 
+    puts "Here's the artist(s) that were found with that search entry: \n \n" 
 
     artist_array_with_num = array_of_artists.uniq.each_with_index do |artist, index| 
       number = index + 1
@@ -97,20 +88,34 @@ class SearchItem
         
     if prompt_yes_or_no
        input= prompt.enum_select("Select the artist ", array_of_artists.uniq)
-       @artist_object = Artist.new(input)
-       artist_search_object = artist_object.search  
-       puts "Click the link here for their Spotify page : " + artist_search_object.external_urls["spotify"]
-        
+       create_artist_and_search(input)
+       puts "Click the link here for their Spotify page : " + @artist_search_object.external_urls["spotify"]
+       search_again?
     else
-         exit_app
+      search_again?
     end
   end
 
 
   def follow_artist
-    @@followed_artists << artist_object
+    @@followed_artists << @artist_search_object
+    @@followed_artists
   end
 
+  def current_followed_artists
+    followed_artist_names = @@followed_artists.collect {|artist| artist.name}
+    puts "Here is the list of artists you currently follow: #{followed_artist_names.uniq.join(", ")}"
+  end
+
+  def create_artist_and_search(arg)
+    @artist_object = Artist.new(arg)
+    @artist_search_object = @artist_object.search
+  end
+
+  def create_track_and_search(arg)
+    @track_input = Track.new(arg) 
+    @track_search = @track_input.search
+  end
 
   def search_again?
     prompt_y_or_n = prompt.yes?("Do you want to search again?")
