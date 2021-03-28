@@ -1,11 +1,6 @@
-#code that starts our program
-#this is not in ruby code because it is an executable file- code that we will run in the command license
-#for executable files we dont want a computer to not read it. we leave off the type of code it is
-#instead we list the type of code for the first line in the file with a shebang line
-
 #!/usr/bin/env ruby
 
 require_relative "../environment" 
 
 
- RSpotify.authenticate(ENV["SPOTIFY_CLIENT_ID"], ENV["SPOTIFY_KEY"])
+

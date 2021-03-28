@@ -140,9 +140,3 @@ class SearchItem
 
 
 end
-
-#refractoring needs to be done
-#put stuff in artists and track classes
-#figure out how to get a list of tracks from an album
-#write a read me page
-#figure out what to do about licensing
