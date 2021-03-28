@@ -13,4 +13,8 @@ class Track
         track_search
      end
 
+     def self.search_history
+        @@all.collect {|artist| artist.name}
+    end
+
 end
