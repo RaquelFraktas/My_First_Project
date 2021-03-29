@@ -6,6 +6,7 @@ class SearchItem
   def initialize
     puts "Welcome to Raquel's Spotify CLI"
     @prompt = TTY::Prompt.new
+    select
    end
 
 
