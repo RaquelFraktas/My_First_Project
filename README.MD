@@ -1,7 +1,7 @@
 I created a Ruby CLI that gets data from the Spotify API.
 
 ## In order to use this app
-Please get an API Key and Client ID from Github and create a .env file with the following keys:
+Please get an API Key and Client ID from Spotify and create a .env file with the following keys:
 ```
 SPOTIFY_CLIENT_ID=[YOUR CLIENT ID HERE]
 SPOTIFY_KEY = [YOUR CLIENT KEY HERE]
@@ -15,6 +15,8 @@ This app relies heavily on the RSpotify gem. Additional information is located h
 Run `bundle install` in the command line to install all the gems. 
 
 Run the app with `ruby environment.rb`
+or
+Run it with `bin/start` - before you do so, make sure `chmod +x bin/start` was run in the terminal. This gives the file run access.
 
 
 ## Deliverables
